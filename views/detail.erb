@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang=“ja”>
+  <head>
+    <meta charset=“UFT-8”>
+    <title>メモアプリ_dtanakab</title>
+    <link rel="stylesheet" href="/app.css" />
+  </head>
+  <body>
+    <div class='header'><a href='/'>メモアプリ</a></div>
+    <div class='memo_detail'>
+      <h2 class='memo_title'>メモ<%= @id %>の内容</h2>
+      <h3 class='memo_detail'><%= @memo %></h3>
+    </div>
+    <div class='buttons_area'>
+      <div class='button'>
+        <a href="/edit/<%= @id %>">変更</a>
+      </div>
+      <div class='button'>
+        <form method='post' action="/delete/<%= @id %>">
+          <input type= "hidden" name="_method" value="DELETE">
+          <input type= "submit" value="削除">
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

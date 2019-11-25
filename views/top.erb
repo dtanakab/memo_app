@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang=“ja”>
+  <head>
+    <meta charset=“UFT-8”>
+    <title>メモアプリ_dtanakab</title>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <div class='header'><a href='/'>メモアプリ</a></div>
+      <ul class='memo_list'>
+        <% @memoes.each do |id, memo| %>
+          <li class='memo_link'><a href='/detail/<%= id %>'>メモ<%= id %></a></li>
+        <% end %>
+      </ul>
+    <div class="buttons_area">
+      <div class="button"><a href='/add'>メモを追加</a></div>
+    </div>
+  </body>
+</html>
