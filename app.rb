@@ -14,21 +14,21 @@ get '/add' do
   erb :add_memo
 end
 
-get '/edit/*' do |id|
-  @id = id
-  @memo = Memo.read(id)
+get '/edit/:id' do
+  @id = params[:id]
+  @memo = Memo.read(@id)
   erb :edit
 end
 
-patch '/edit/*' do |id|
-  @id = id
-  Memo.update(id, params['memo'])
-  redirect "/detail/#{id}"
+patch '/edit/:id' do
+  @id = params[:id]
+  Memo.update(@id, params['memo'])
+  redirect "/detail/#{@id}"
 end
 
-get '/detail/*' do |id|
-  @id = id
-  @memo = Memo.read(id)
+get '/detail/:id' do
+  @id = params[:id]
+  @memo = Memo.read(@id)
   erb :detail
 end
 
@@ -37,7 +37,7 @@ post '/new' do
   redirect '/'
 end
 
-delete '/delete/*' do |id|
-  Memo.delete(id)
+delete '/delete/:id' do
+  Memo.delete(params[:id])
   redirect '/'
 end

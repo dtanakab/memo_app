@@ -12,11 +12,11 @@ class Memo
     end
 
     def write(text)
-      @conn.exec("INSERT INTO memo VALUES (nextval('id'), $1)", [text])
+      @conn.exec("INSERT INTO memo VALUES (nextval('id'), '#{text}')")
     end
 
     def update(id, text)
-      @conn.exec('UPDATE memo SET memo = $1 WHERE id = $2', [text, id])
+      @conn.exec("UPDATE memo SET memo = '#{text}' WHERE id = '#{id}'")
     end
 
     def read(id)
