@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 require 'sinatra'
+require 'securerandom'
 require 'sinatra/reloader'
 require 'fileutils'
 require_relative 'app_memo'
 
 memoes = {}
-id_count = 1
 
 get '/' do
   @memoes = memoes
@@ -17,32 +17,32 @@ get '/add' do
   erb :add_memo
 end
 
-get '/edit/*' do |id|
-  @id = id
-  @memo = memoes[id].read
+get '/edit/:id' do
+  @id = params[:id]
+  @memo = memoes[@id].read
   erb :edit
 end
 
-patch '/edit/*' do |id|
-  @id = id
-  memoes[id].update(params[:memo])
-  redirect "/detail/#{id}"
+patch '/edit/:id' do
+  @id = params[:id]
+  memoes[@id].update(params[:memo])
+  redirect "/detail/#{@id}"
 end
 
-get '/detail/*' do |id|
-  @id = id
-  @memo = memoes[id].read
+get '/detail/:id' do
+  @id = params[:id]
+  @memo = memoes[@id].read
   erb :detail
 end
 
 post '/new' do
-  @id = id_count.to_s
+  @id = SecureRandom.urlsafe_base64
   memoes[@id] = Memo.new(@id, params[:memo])
-  id_count += 1
   redirect '/'
 end
 
-delete '/delete/*' do |id|
+delete '/delete/:id' do
+  id = params[:id]
   memoes[id].delete
   memoes.delete(id)
   redirect '/'
