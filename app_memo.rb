@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
+require 'securerandom'
+
 # read or write or remove txt file
 class Memo
   attr_reader :file_name, :id, :contents
 
-  def initialize(id, contents)
-    @id = id
+  def initialize(contents)
+    @id = SecureRandom.urlsafe_base64
     @file_name = "memo_#{@id}.txt"
     update(contents)
   end

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'sinatra'
-require 'securerandom'
 require 'sinatra/reloader'
 require 'fileutils'
 require_relative 'app_memo'
@@ -36,8 +35,9 @@ get '/detail/:id' do
 end
 
 post '/new' do
-  @id = SecureRandom.urlsafe_base64
-  memoes[@id] = Memo.new(@id, params[:memo])
+  memo = Memo.new(params[:memo])
+  @id = memo.id
+  memoes[@id] = memo
   redirect '/'
 end
 
