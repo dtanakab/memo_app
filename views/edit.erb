@@ -7,7 +7,7 @@
   </head>
   <body>
     <div class='header'><a href='/'>メモアプリ</a></div>
-    <h2 class='memo_title'>メモ<%= @id %></h2>
+    <h2 class='memo_title'>メモを変更する</h2>
       <form method="post" action="/edit/<%= @id %>">
         <textarea type= "text" name="memo" rows="10" wrap='hard' ><%= @memo %></textarea>
         <input type= "hidden" name="_method" value="PATCH">
