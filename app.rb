@@ -29,6 +29,7 @@ end
 get '/detail/:id' do
   @id = params[:id]
   @memo = Memo.read(@id)
+
   erb :detail
 end
 
