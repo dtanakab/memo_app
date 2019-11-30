@@ -5,10 +5,8 @@ require 'sinatra/reloader'
 require 'fileutils'
 require_relative 'app_memo'
 
-memoes = {}
-
 get '/' do
-  @memoes = memoes
+  @memo_titles = Memo.index
   erb :top
 end
 
@@ -18,32 +16,28 @@ end
 
 get '/edit/:id' do
   @id = params[:id]
-  @memo = memoes[@id].read
+  @memo = Memo.read(@id)
   erb :edit
 end
 
 patch '/edit/:id' do
   @id = params[:id]
-  memoes[@id].update(params[:memo])
+  Memo.update(@id, params['memo'])
   redirect "/detail/#{@id}"
 end
 
 get '/detail/:id' do
   @id = params[:id]
-  @memo = memoes[@id].read
+  @memo = Memo.read(@id)
   erb :detail
 end
 
 post '/new' do
-  memo = Memo.new(params[:memo])
-  @id = memo.id
-  memoes[@id] = memo
+  Memo.write(params['memo'].to_s)
   redirect '/'
 end
 
 delete '/delete/:id' do
-  id = params[:id]
-  memoes[id].delete
-  memoes.delete(id)
+  Memo.delete(params[:id])
   redirect '/'
 end

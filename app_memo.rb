@@ -1,29 +1,30 @@
 # frozen_string_literal: true
 
-require 'securerandom'
+require 'pg'
 
-# read or write or remove txt file
+# Read or write or remove txt file
 class Memo
-  attr_reader :file_name, :id, :contents
+  @conn = PG.connect(dbname: 'sinatra_training')
 
-  def initialize(contents)
-    @id = SecureRandom.urlsafe_base64
-    @file_name = "memo_#{@id}.txt"
-    update(contents)
-  end
-
-  def update(contents)
-    File.open("memo/#{@file_name}", 'w') do |f|
-      @contents = contents
-      f.puts(contents)
+  class << self
+    def index
+      @conn.exec('SELECT id FROM memo')
     end
-  end
 
-  def read
-    File.read("memo/#{@file_name}")
-  end
+    def write(text)
+      @conn.exec("INSERT INTO memo VALUES (nextval('id'), $1)", [text])
+    end
 
-  def delete
-    FileUtils.rm("memo/#{@file_name}")
+    def update(id, text)
+      @conn.exec('UPDATE memo SET memo = $1 WHERE id = $2', [text, id])
+    end
+
+    def read(id)
+      @conn.exec('SELECT memo FROM memo WHERE id = $1', [id])[0]['memo']
+    end
+
+    def delete(id)
+      @conn.exec('DELETE FROM Memo WHERE id = $1', [id])
+    end
   end
 end
