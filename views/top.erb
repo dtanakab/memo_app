@@ -9,7 +9,11 @@
     <div class='header'><a href='/'>メモアプリ</a></div>
       <ul class='memo_list'>
         <% @memo_titles.each do | memo_title | %>
-          <li class='memo_link'><a href='/detail/<%= memo_title['id'] %>'>メモ<%= memo_title['id'] %></a></li>
+          <li class='memo_link'>
+            <a href='/detail/<%= memo_title['id'] %>'>
+              メモ <%= memo_title['id'] %>
+            </a>
+          </li>
         <% end %>
       </ul>
     <div class="buttons_area">
